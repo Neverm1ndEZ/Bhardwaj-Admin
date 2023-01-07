@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Objects.requireNonNull(getSupportActionBar()).hide();
-
         internetLayout = findViewById(R.id.internetLayout);
         noInternetLayout = findViewById(R.id.noInternetLayout);
         webView = findViewById(R.id.webView);
@@ -42,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setDomStorageEnabled(true);
 
         webView.loadUrl("https://bhardwajhospitals.in/app/site/login/");
 
@@ -64,14 +63,17 @@ public class MainActivity extends AppCompatActivity {
                 internetLayout.setVisibility(View.GONE);
                 super.onReceivedError(view, request, error);
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                webView.loadUrl("https://bhardwajhospitals.in/app/site/login/");
+                return true;
+            }
         });
 
-        tryAgainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawLayout();
-                webView.loadUrl("javascript:window.location.reload(true)");
-            }
+        tryAgainButton.setOnClickListener(view -> {
+            drawLayout();
+            webView.loadUrl("https://bhardwajhospitals.in/app/site/login/");
         });
     }
 
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         if(isNetworkAvailable()){
             internetLayout.setVisibility(View.VISIBLE);
             noInternetLayout.setVisibility(View.GONE);
-            webView.loadUrl("javascript:window.location.reload(true)");
+            webView.loadUrl("https://bhardwajhospitals.in/app/site/login/");
         } else {
             noInternetLayout.setVisibility(View.VISIBLE);
             internetLayout.setVisibility(View.GONE);
