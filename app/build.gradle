@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.ultracures.bhardwajhospital_admin'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.ultracures.bhardwajhospital_admin"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 3
         versionName "1.2"
 
